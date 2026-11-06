@@ -13,7 +13,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     auth: {
       clientId: '6f4a5212-2919-4a5b-b1a3-b7d97d648a81',
       authority: 'https://login.microsoftonline.com/4c87468f-a072-4e8e-a8ad-f04e3884f1cd',
-      redirectUri: 'http://localhost:57698' // Asegúrate de usar el puerto exacto que muestra tu navegador
+      redirectUri: 'http://localhost:4200' // Asegúrate de usar el puerto exacto que muestra tu navegador
     },
     cache: {
       cacheLocation: 'localStorage',
