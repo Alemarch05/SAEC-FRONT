@@ -1,31 +1,63 @@
 <mat-sidenav-container class="sidenav-container">
   <!-- MENÚ LATERAL (ASIDE) -->
   <mat-sidenav mode="side" opened class="sidenav">
-    <div class="brand">
-      <h2>Nombre Proyecto</h2>
+    <div class="sidenav-wrapper">
+      
+      <!-- Cabecera del Menú -->
+      <mat-card appearance="outlined" class="cardLabels">
+
+      <div class="brand">
+        <h2 class="brand-title">SAEC</h2>
+        <p class="brand-subtitle">Sistema de administración</p>
+      </div>
+
+      <!-- Enlaces de navegación -->
+      <mat-nav-list class="nav-list">
+        <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+          <mat-icon matListItemIcon>dashboard</mat-icon>
+          <span matListItemTitle>Panel de control</span>
+          <span matListItemLine>Información general de equipos</span>
+        </a>
+        
+        <a mat-list-item routerLink="/catalogo" routerLinkActive="active-link">
+          <mat-icon matListItemIcon>devices</mat-icon>
+          <span matListItemTitle>Catálogo de equipos</span>
+          <span matListItemLine>Encuentra todos tus equipos</span>
+        </a>
+
+        <a mat-list-item routerLink="/configuracion" routerLinkActive="active-link">
+          <mat-icon matListItemIcon>settings</mat-icon>
+          <span matListItemTitle>Configuración</span>
+          <span matListItemLine>Configura SAEC</span>
+        </a>
+      </mat-nav-list>
+
+    </mat-card>
+
+      <!-- Perfil de usuario (Anclado al fondo) -->
+      <div class="user-profile-section">
+        <div class="user-info-row">
+          <!-- Placeholder de Avatar (Puedes cambiarlo por un icono o iniciales) -->
+          <div class="avatar">{{ userInitials() }}</div>
+          <div class="user-details">
+            <span class="user-name">{{ userName() }}</span>
+            <span class="user-role">Soporte de TI</span>
+          </div>
+        </div>
+        <button mat-icon-button (click)="logout()" title="Cerrar sesión">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+
     </div>
-    
-    <mat-nav-list>
-      <a mat-list-item routerLink="enlace1">
-        <span matListItemTitle>Enlace 1</span>
-      </a>
-      <a mat-list-item routerLink="enlace2">
-        <span matListItemTitle>Enlace 2</span>
-      </a>
-    </mat-nav-list>
   </mat-sidenav>
 
   <!-- CONTENIDO PRINCIPAL -->
-  <mat-sidenav-content>
-    <mat-toolbar color="primary" class="toolbar">
-      <span>Sistema</span>
-      <span class="spacer"></span>
-      <button mat-button (click)="logout()">
-        <mat-icon>logout</mat-icon> Salir
-      </button>
-    </mat-toolbar>
-
-    <!-- AQUÍ SE RENDERIZAN LAS DEMÁS VISTAS -->
+  <mat-sidenav-content class="main-content">
+    <!-- El Toolbar lo quitamos si el diseño de Figma no lo requiere, 
+         o lo dejamos invisible/blanco si solo es para móviles -->
+    
+    <!-- AQUÍ SE RENDERIZAN LAS DEMÁS VISTAS (Dashboard, Catálogo, etc.) -->
     <div class="content-padding">
       <router-outlet></router-outlet>
     </div>
