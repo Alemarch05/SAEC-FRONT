@@ -1,15 +1,23 @@
 import { CanActivateFn } from '@angular/router';
-import { AuthService } from '../services/auth/auth.service';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { MsalService } from '@azure/msal-angular';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
+export const authGuard: CanActivateFn = async (route, state) => {
+  const msalService = inject(MsalService);
   const router = inject(Router);
 
-  if (authService.hasToken()) {
+  // Asegurarse de que MSAL esté inicializado antes de buscar cuentas
+  try {
+    await msalService.instance.initialize();
+  } catch (e) {
+    // Si ya estaba inicializado, ignoramos el error
+  }
+
+  if (msalService.instance.getAllAccounts().length > 0) {
     return true;
   }
+
   router.navigate(['/login']);
   return false;
 };
