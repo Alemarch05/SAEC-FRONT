@@ -1,14 +1,11 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/auth/login.component/login.component';
 import { authGuard } from './core/guards/auth-guard';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { Enlace1Component } from './components/tests/enlace1.component/enlace1.component';
 import { Enlace2Component } from './components/tests/enlace2.component/enlace2.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
   
-  // Rutas protegidas por authGuard con el MainLayout
   {
     path: '',
     component: MainLayoutComponent,
@@ -24,5 +21,4 @@ export const routes: Routes = [
     ]
   },
 
-  { path: '**', redirectTo: 'login' }
 ];
