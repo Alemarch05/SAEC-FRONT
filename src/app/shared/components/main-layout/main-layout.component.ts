@@ -1,10 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterModule } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { MaterialModule } from '../../material.module';
 import { MsalService } from '@azure/msal-angular';
 
 @Component({
@@ -14,10 +11,7 @@ import { MsalService } from '@azure/msal-angular';
     CommonModule,
     RouterOutlet,
     RouterModule, // Necesario para routerLink y routerLinkActive
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule
+    MaterialModule
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'
