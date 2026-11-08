@@ -1,0 +1,96 @@
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0B1F3B; /* Tu color Primary */
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-card {
+  border-radius: 12px;
+  background-color: #ffffff;
+  
+  mat-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0B1F3B;
+  }
+}
+
+.section-description {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.full-width {
+  width: 100%;
+  max-width: 400px;
+}
+
+.template-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  
+  .template-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    
+    .mat-icon {
+      transform: scale(1.2);
+    }
+  }
+
+  .template-details {
+    display: flex;
+    flex-direction: column;
+    
+    .template-name {
+      font-weight: 500;
+      color: #1f2937;
+    }
+    
+    .template-meta {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+  }
+}
+
+.hidden-input {
+  display: none;
+}
+
+.selected-file-name {
+  display: block;
+  font-size: 12px;
+  color: #2563EB; /* Tu color Accent */
+  margin-top: 8px;
+  text-align: right;
+}
+
+.action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  
+  button {
+    padding: 8px 32px;
+    font-size: 16px;
+  }
+}

@@ -14,6 +14,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -25,6 +26,7 @@ const MATERIAL_MODULES = [
   MatTableModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
+  MatDividerModule,
   MatStepperModule,
   MatDialogModule,
     MatSidenavModule,

@@ -1,1 +1,79 @@
-<p>configuracion works!</p>
+<div class="page-container">
+  <h1 class="page-title">CONFIGURACIÓN DE SAEC</h1>
+
+  <form [formGroup]="configForm" (ngSubmit)="guardarConfiguracion()" class="config-form">
+    
+    <!-- Configuración General -->
+    <mat-card appearance="outlined" class="section-card">
+      <mat-card-header>
+        <mat-card-title>Configuración General de la Empresa</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="section-description">Este valor se utiliza para calcular el porcentaje de cobertura en el Dashboard.</p>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Cantidad de equipos totales de la empresa</mat-label>
+          <input matInput type="number" formControlName="totalEquipos" placeholder="Ej. 350">
+          <mat-icon matSuffix>devices</mat-icon>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Gestión de Plantillas -->
+    <mat-card appearance="outlined" class="section-card">
+      <mat-card-header>
+        <mat-card-title>Gestión de Plantillas de Documentos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="section-description">Variables disponibles para usar en el documento: $(serial_number), $(hostname), $(mac_address), $(usuario), $(observaciones)</p>
+        
+        <mat-divider></mat-divider>
+
+        <!-- Plantilla Entrega -->
+        <div class="template-row">
+          <div class="template-info">
+            <mat-icon color="primary">description</mat-icon>
+            <div class="template-details">
+              <span class="template-name">Plantilla de Entrega y Devolución</span>
+              <span class="template-meta">Actual: plantilla_entrega_v1.docx</span>
+            </div>
+          </div>
+          <div>
+            <input type="file" #fileEntrega class="hidden-input" accept=".docx,.pdf" (change)="onFileSelected($event, 'entrega')">
+            <button type="button" mat-stroked-button color="primary" (click)="fileEntrega.click()">
+              Reemplazar Plantilla
+            </button>
+            <span class="selected-file-name" *ngIf="plantillaEntrega">{{ plantillaEntrega.name }}</span>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Plantilla Hoja de Vida -->
+        <div class="template-row">
+          <div class="template-info">
+            <mat-icon color="primary">description</mat-icon>
+            <div class="template-details">
+              <span class="template-name">Plantilla de Hoja de Vida (PDF/DOCX)</span>
+              <span class="template-meta">Actual: plantilla_hoja_de_vida_2026.docx</span>
+            </div>
+          </div>
+          <div>
+            <input type="file" #fileHoja class="hidden-input" accept=".docx,.pdf" (change)="onFileSelected($event, 'hoja_vida')">
+            <button type="button" mat-stroked-button color="primary" (click)="fileHoja.click()">
+              Reemplazar Plantilla
+            </button>
+            <span class="selected-file-name" *ngIf="plantillaHojaVida">{{ plantillaHojaVida.name }}</span>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Botón de Acción -->
+    <div class="action-row">
+      <button mat-flat-button color="primary" type="submit" [disabled]="!configForm.valid">
+        Guardar Configuración
+      </button>
+    </div>
+  </form>
+</div>
