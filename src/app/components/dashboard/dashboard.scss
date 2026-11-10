@@ -1,0 +1,165 @@
+.page-container {
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.section-card {
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  mat-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0B1F3B;
+    line-height: 1.3;
+  }
+}
+
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  padding: 16px 20px;
+
+  mat-card-header {
+    padding: 0;
+  }
+}
+
+.metric-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  padding: 12px 0;
+  gap: 6px;
+}
+
+.metric-icon {
+  font-size: 54px;
+  width: 54px;
+  height: 54px;
+  color: #5b768a;
+}
+
+.metric-number {
+  font-size: 44px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.1;
+}
+
+.metric-subtext {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.35;
+  max-width: 210px;
+}
+
+.metric-footer {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  padding-top: 4px;
+}
+
+.alerts-card {
+  overflow: hidden;
+
+  .alerts-header {
+    padding: 16px 24px;
+
+    mat-card-title {
+      font-size: 18px;
+    }
+  }
+
+  .alerts-content {
+    padding: 0;
+  }
+}
+
+.template-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  gap: 16px;
+
+  .template-info {
+    display: flex;
+    align-items: center;
+  }
+
+  .template-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    .template-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      text-transform: uppercase;
+    }
+
+    .template-device {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1f2937;
+    }
+
+    .template-meta {
+      font-size: 14px;
+      color: #374151;
+    }
+  }
+}
+
+.alert-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+  gap: 6px;
+
+  .warning-icon {
+    color: #7c7c7c;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .alert-time {
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+    white-space: nowrap;
+  }
+}
+
+.empty-alerts {
+  padding: 24px;
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  text-align: center;
+}
+
