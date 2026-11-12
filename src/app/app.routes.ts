@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
-import { Catalogo} from './components/catalogo/catalogo';
+import { CatalogoComponent} from './components/catalogo/catalogo.component';
+import { DetalleEquipoComponent } from './components/detalle-equipo/detalle-equipo.component';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Configuracion } from './components/configuracion/configuracion';
 export const routes: Routes = [
@@ -15,7 +16,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'catalogo', pathMatch: 'full' },
       
       // Aquí declaras la ruta para Enlace1Component
-      { path: 'catalogo', component: Catalogo },
+      { path: 'catalogo', component: CatalogoComponent },
+      { path: 'catalogo/:id', component: DetalleEquipoComponent },
       { path: 'dashboard', component: Dashboard },
       { path: 'configuracion', component: Configuracion },
       

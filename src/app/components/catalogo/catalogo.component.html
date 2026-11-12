@@ -1,0 +1,53 @@
+<div class="catalog-container" style="display: flex; gap: 20px; padding: 20px;">
+  
+  <!-- Lista Izquierda -->
+  <div class="device-list" style="flex: 2;">
+    <h2>Hardware Tool</h2>
+    <table mat-table [dataSource]="devices" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre del Equipo </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="ip_address">
+        <th mat-header-cell *matHeaderCellDef> Dirección IP </th>
+        <td mat-cell *matCellDef="let element"> {{element.ip_address}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef> Ubicación </th>
+        <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+          (click)="selectDevice(row)"
+          [class.selected-row]="selectedDevice?.id === row.id"></tr>
+    </table>
+  </div>
+
+  <!-- Panel Derecho (Información Rápida) -->
+  <div class="device-preview" style="flex: 1;" *ngIf="selectedDevice">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Información del equipo</mat-card-title>
+        <mat-card-subtitle>{{ selectedDevice.name }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>CPU Model:</strong> {{ selectedDevice.last_snapshot?.cpu_model }}</p>
+        <p><strong>Ram Memory:</strong> {{ selectedDevice.last_snapshot?.ram_memory }}</p>
+        <p><strong>Internal Memory:</strong> {{ selectedDevice.last_snapshot?.internal_memory }}</p>
+        <p><strong>IP Address:</strong> {{ selectedDevice.ip_address }}</p>
+        <p><strong>MAC Address:</strong> {{ selectedDevice.last_snapshot?.mac_address }}</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-color="primary" (click)="abrirDetalle(selectedDevice.id)">Abrir</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
