@@ -1,1 +1,86 @@
-<p>dashboard works!</p>
+<div class="page-container">
+
+  <!-- Fila superior: 3 Tarjetas de Métricas -->
+  <div class="metrics-row">
+    
+    <!-- Tarjeta 1: Total de Equipos de la Empresa -->
+    <mat-card appearance="outlined" class="section-card metric-card">
+      <mat-card-header>
+        <mat-card-title>Total de Equipos de la Empresa</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="metric-content">
+        <mat-icon class="metric-icon">desktop_windows</mat-icon>
+        <span class="metric-number">{{ metrics.meta }}</span>
+      </mat-card-content>
+      <div class="metric-footer">Total de activos registrados</div>
+    </mat-card>
+
+    <!-- Tarjeta 2: Logro de Cobertura -->
+    <mat-card appearance="outlined" class="section-card metric-card">
+      <mat-card-header>
+        <mat-card-title>Logro de Cobertura</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="metric-content">
+        <span class="metric-number">{{ metrics.porcentaje }}%</span>
+        <p class="metric-subtext">
+          (porcentaje de cobertura de la flota que cuenta con agente activo)
+        </p>
+      </mat-card-content>
+      <div class="metric-footer">Equipos con agente activo</div>
+    </mat-card>
+
+    <!-- Tarjeta 3: Registrados por SAEC -->
+    <mat-card appearance="outlined" class="section-card metric-card">
+      <mat-card-header>
+        <mat-card-title>Registrados por SAEC</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="metric-content">
+        <span class="metric-number">{{ metrics.registro_actual }}</span>
+      </mat-card-content>
+      <div class="metric-footer">Monitoreados por la plataforma</div>
+    </mat-card>
+
+  </div>
+
+  <!-- Tarjeta inferior: Alertas Críticas Recientes -->
+  <mat-card appearance="outlined" class="section-card alerts-card">
+    <mat-card-header class="alerts-header">
+      <mat-card-title>Alertas Críticas Recientes</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="alerts-content">
+
+      <div *ngFor="let alerta of alertas; let last = last">
+        <div class="template-row">
+          <div class="template-info">
+            <div class="template-details">
+              <span class="template-name">{{ obtenerTituloAlerta(alerta) }}</span>
+              <span class="template-device">
+                {{ alerta.device?.hostname || alerta.device_id }}
+                <ng-container *ngIf="alerta.device?.assigned_to">
+                  (Asignado a: {{ alerta.device?.assigned_to }})
+                </ng-container>
+              </span>
+              <span class="template-meta">{{ obtenerDescripcionAlerta(alerta) }}</span>
+            </div>
+          </div>
+
+          <div class="alert-right">
+            <mat-icon class="warning-icon">warning</mat-icon>
+            <span class="alert-time">{{ obtenerTiempoRelativo(alerta.detected_at) }}</span>
+          </div>
+        </div>
+
+        <mat-divider *ngIf="!last"></mat-divider>
+      </div>
+
+      <p class="empty-alerts" *ngIf="alertas.length === 0">
+        No hay alertas críticas recientes registradas.
+      </p>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>
