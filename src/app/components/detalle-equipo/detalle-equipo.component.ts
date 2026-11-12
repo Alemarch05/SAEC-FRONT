@@ -9,7 +9,8 @@ import { Device } from '../../core/interfaces/device.interface';
   selector: 'app-detalle-equipo',
   standalone: true,
   imports: [CommonModule, MaterialModule],
-  templateUrl: './detalle-equipo.component.html'
+  templateUrl: './detalle-equipo.component.html',
+  styleUrls: ['./detalle-equipo.component.scss']
 })
 export class DetalleEquipoComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -22,7 +23,10 @@ export class DetalleEquipoComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.deviceService.getDeviceById(id).subscribe(data => this.device = data);
+      this.deviceService.getDeviceById(id).subscribe({
+        next: (data) => this.device = data,
+        error: (err) => console.error('Error cargando detalle', err)
+      });
     }
   }
 
@@ -35,10 +39,10 @@ export class DetalleEquipoComponent implements OnInit {
   }
 
   eliminarEquipo() {
-    if (confirm('¿Estás seguro de eliminar este equipo?')) {
-      this.deviceService.deleteDevice(this.device!.id).subscribe(() => {
-        this.router.navigate(['/catalogo']);
-      });
+    if (confirm('¿Estás seguro de eliminar este equipo de SAEC?')) {
+      // this.deviceService.deleteDevice(this.device!.id).subscribe(...)
+      alert('Equipo eliminado (Simulación)');
+      this.router.navigate(['/catalogo']);
     }
   }
 }
