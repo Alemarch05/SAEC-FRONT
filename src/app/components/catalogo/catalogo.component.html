@@ -1,53 +1,66 @@
-<div class="catalog-container" style="display: flex; gap: 20px; padding: 20px;">
+<div class="catalog-container">
   
-  <!-- Lista Izquierda -->
-  <div class="device-list" style="flex: 2;">
+  <!-- Panel Izquierdo: Tabla -->
+  <div class="device-list">
     <h2>Hardware Tool</h2>
-    <table mat-table [dataSource]="devices" class="mat-elevation-z8">
-      <ng-container matColumnDef="name">
+
+    <p *ngIf="loading()">Cargando equipos...</p>
+    <p *ngIf="errorMessage()" style="color: #EF4444;">{{ errorMessage() }}</p>
+    <p *ngIf="!loading() && !errorMessage() && devices().length === 0">
+      No hay equipos registrados.
+    </p>
+
+    <table mat-table [dataSource]="devices()" class="mat-elevation-z8" 
+           *ngIf="!loading() && !errorMessage() && devices().length > 0">
+      
+      <ng-container matColumnDef="hostname">
         <th mat-header-cell *matHeaderCellDef> Nombre del Equipo </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.hostname }} </td>
       </ng-container>
       
-      <ng-container matColumnDef="ip_address">
-        <th mat-header-cell *matHeaderCellDef> Dirección IP </th>
-        <td mat-cell *matCellDef="let element"> {{element.ip_address}} </td>
+      <ng-container matColumnDef="mac_address">
+        <th mat-header-cell *matHeaderCellDef> Dirección MAC </th>
+        <td mat-cell *matCellDef="let element"> {{ element.mac_address }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="os_name">
+        <th mat-header-cell *matHeaderCellDef> Sistema Operativo </th>
+        <td mat-cell *matCellDef="let element"> {{ element.os_name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Estado </th>
-        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="location">
-        <th mat-header-cell *matHeaderCellDef> Ubicación </th>
-        <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
           (click)="selectDevice(row)"
-          [class.selected-row]="selectedDevice?.id === row.id"></tr>
+          [class.selected-row]="selectedDevice()?.id === row.id"></tr>
     </table>
   </div>
 
-  <!-- Panel Derecho (Información Rápida) -->
-  <div class="device-preview" style="flex: 1;" *ngIf="selectedDevice">
+  <!-- Panel Derecho: Información rápida -->
+  <div class="device-preview" *ngIf="selectedDevice() as device">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Información del equipo</mat-card-title>
-        <mat-card-subtitle>{{ selectedDevice.name }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ device.hostname }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <p><strong>CPU Model:</strong> {{ selectedDevice.last_snapshot?.cpu_model }}</p>
-        <p><strong>Ram Memory:</strong> {{ selectedDevice.last_snapshot?.ram_memory }}</p>
-        <p><strong>Internal Memory:</strong> {{ selectedDevice.last_snapshot?.internal_memory }}</p>
-        <p><strong>IP Address:</strong> {{ selectedDevice.ip_address }}</p>
-        <p><strong>MAC Address:</strong> {{ selectedDevice.last_snapshot?.mac_address }}</p>
+        <p><strong>Procesador:</strong> {{ selectedSnapshot()?.processor_summary || 'Sin datos' }}</p>
+        <p><strong>Memoria RAM:</strong> {{ selectedSnapshot()?.total_ram_gb ? selectedSnapshot()?.total_ram_gb + ' GB' : 'Sin datos' }}</p>
+        <p><strong>Almacenamiento:</strong> {{ selectedSnapshot()?.storage_summary || 'Sin datos' }}</p>
+        <p><strong>Gráficos (GPU):</strong> {{ selectedSnapshot()?.gpu_summary || 'Sin datos' }}</p>
+        <p><strong>Dir. MAC:</strong> {{ device.mac_address }}</p>
+        <p><strong>Serial:</strong> {{ device.serial_number || 'No asignado' }}</p>
+        <p><strong>S.O. Versión:</strong> {{ device.os_version || 'N/A' }}</p>
+        <p><strong>Agente SAEC:</strong> v{{ device.agent_version }}</p>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-raised-color="primary" (click)="abrirDetalle(selectedDevice.id)">Abrir</button>
+        <button mat-raised-button color="primary" (click)="abrirDetalle(device.id)">Abrir</button>
       </mat-card-actions>
     </mat-card>
   </div>
+
 </div>

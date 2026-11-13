@@ -1,19 +1,48 @@
-<div class="detalle-container" *ngIf="device">
+<div style="padding: 24px;" *ngIf="loading()">
+  <p>Cargando detalles del equipo...</p>
+</div>
+
+<div style="padding: 24px;" *ngIf="!loading() && errorMessage()">
+  <p style="color: #EF4444;">{{ errorMessage() }}</p>
+  <button mat-stroked-button (click)="volverCatalogo()">Volver al catálogo</button>
+</div>
+
+<div class="detalle-container" *ngIf="!loading() && device() as currentDevice">
   <div class="header-section">
-    <h2>Equipo de {{ device.name }}</h2>
-    <span class="ubicacion-badge">{{ device.location }}</span>
+    <span class="ubicacion-badge">{{ currentDevice.status }}</span>
+
+    <div class="pc-hero">
+      <svg class="pc-icon-large" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <!-- Monitor -->
+        <rect x="6" y="8" width="32" height="23" rx="2" />
+        <line x1="16" y1="37" x2="28" y2="37" />
+        <line x1="22" y1="31" x2="22" y2="37" />
+        <!-- Torre CPU -->
+        <rect x="43" y="8" width="15" height="34" rx="2" />
+        <line x1="47" y1="14" x2="54" y2="14" />
+        <line x1="47" y1="19" x2="54" y2="19" />
+        <circle cx="50.5" cy="30" r="2.5" />
+        <!-- Teclado y cable -->
+        <path d="M10 47H38L41 55H7L10 47Z" />
+        <line x1="14" y1="50" x2="34" y2="50" />
+        <line x1="16" y1="52.5" x2="32" y2="52.5" />
+        <path d="M24 47V43.5H50.5V42" />
+      </svg>
+
+      <h2>Equipo {{ currentDevice.hostname }}</h2>
+    </div>
+
+    <hr class="header-divider" />
   </div>
 
   <mat-card class="components-card">
-    <table mat-table [dataSource]="device.last_snapshot?.components || []" class="mat-elevation-z0">
+    <table mat-table [dataSource]="componentesFormateados()" class="mat-elevation-z0">
       
-      <!-- Columna Componente -->
       <ng-container matColumnDef="component">
-        <th mat-header-cell *matHeaderCellDef> COMPONENTES </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <th mat-header-cell *matHeaderCellDef> COMPONENTES Y ESPECIFICACIONES </th>
+        <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
       </ng-container>
 
-      <!-- Columna Estado con Íconos -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef class="text-center"> ESTADO </th>
         <td mat-cell *matCellDef="let element" class="text-center">
@@ -27,8 +56,8 @@
     </table>
   </mat-card>
 
-  <!-- Botones de Acción -->
   <div class="action-buttons">
+    <button mat-button class="btn-secondary" (click)="volverCatalogo()">Volver</button>
     <button mat-button class="btn-secondary" (click)="irHistorial()">Historial de escaneo</button>
     <button mat-button class="btn-secondary" (click)="generarHojaVida()">Generar Hoja de vida</button>
     <button mat-flat-button color="warn" (click)="eliminarEquipo()">Eliminar Equipo</button>

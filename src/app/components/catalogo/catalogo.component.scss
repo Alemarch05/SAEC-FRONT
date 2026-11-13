@@ -38,26 +38,39 @@
   }
 
   .device-preview {
-    flex: 1; /* Toma 1 parte del espacio (es más angosto) */
+    flex: 1;
     
     mat-card {
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      overflow: hidden; // Recorta las esquinas para que la barra superior encaje exacto
+      padding: 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       
       mat-card-header {
-        background-color: #0B1F3B; /* Tu color Primary */
+        background-color: #0B1F3B;
         color: white;
-        border-radius: 8px 8px 0 0;
         padding: 16px;
-        margin: -16px -16px 16px -16px; /* Ajuste interno de la tarjeta */
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
 
         mat-card-title {
           font-size: 1.1rem;
+          margin-bottom: 4px;
         }
         mat-card-subtitle {
           color: #DBEAFE;
           font-weight: bold;
+          margin: 0;
         }
+      }
+
+      mat-card-content {
+        padding: 20px 16px 8px 16px;
+      }
+
+      mat-card-actions {
+        padding: 8px 16px 16px 16px;
       }
 
       p {
@@ -66,7 +79,7 @@
         strong {
           color: #0B1F3B;
           display: inline-block;
-          width: 130px; /* Para alinear los dos puntos (:) */
+          width: 130px;
         }
       }
     }
