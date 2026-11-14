@@ -1,0 +1,122 @@
+<div class="page-container">
+
+  <div class="header-row">
+    <div>
+      <h1 class="page-title">FORMULARIO HOJA DE VIDA DEL EQUIPO</h1>
+      <p class="page-subtitle" *ngIf="device">Equipo {{ device.hostname }}</p>
+    </div>
+
+    <button mat-stroked-button (click)="volverDetalle()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver
+    </button>
+  </div>
+
+  <mat-card appearance="outlined" class="section-card" *ngIf="loading">
+    <mat-card-content class="status-box">
+      <mat-spinner diameter="32"></mat-spinner>
+      <span>Cargando información del equipo...</span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="section-card" *ngIf="!loading && errorMessage">
+    <mat-card-content class="status-box error-text">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </mat-card-content>
+  </mat-card>
+
+  <ng-container *ngIf="!loading && device">
+
+    <!-- Información del Equipo -->
+    <mat-card appearance="outlined" class="section-card">
+      <mat-card-header>
+        <mat-card-title>Información del Equipo</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Dispositivo</span>
+          <span class="info-value">{{ device.hostname }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">Número de Serie</span>
+          <span class="info-value">{{ device.serial_number || 'Sin registrar' }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">Dirección MAC</span>
+          <span class="info-value">{{ device.mac_address }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">Sistema Operativo</span>
+          <span class="info-value">{{ device.os_name }} ({{ device.os_version || 'N/A' }})</span>
+        </div>
+
+        <div class="info-item" *ngIf="snapshot">
+          <span class="info-label">Procesador</span>
+          <span class="info-value">{{ snapshot.processor_summary || 'N/A' }}</span>
+        </div>
+
+        <div class="info-item" *ngIf="snapshot">
+          <span class="info-label">Memoria RAM / Almacenamiento</span>
+          <span class="info-value">{{ snapshot.total_ram_gb }} GB / {{ snapshot.storage_summary || 'N/A' }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Configuración del Documento / Formato de Entrega -->
+    <mat-card appearance="outlined" class="section-card">
+      <mat-card-header>
+        <mat-card-title>Generación de Documento</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="form-content">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Asignado a</mat-label>
+          <input matInput [(ngModel)]="asignadoA" placeholder="Nombre del responsable del equipo">
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <div class="toggle-section">
+          <mat-slide-toggle [(ngModel)]="incluirFormatoEntrega" color="primary">
+            Formato de entrega
+          </mat-slide-toggle>
+
+          <mat-radio-group
+            *ngIf="incluirFormatoEntrega"
+            [(ngModel)]="tipoEntrega"
+            class="radio-group">
+            <mat-radio-button value="entrega">Entrega</mat-radio-button>
+            <mat-radio-button value="devolucion">Devolución</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Observaciones del Equipo</mat-label>
+          <textarea
+            matInput
+            rows="4"
+            [(ngModel)]="observaciones"
+            placeholder="Escribe observaciones sobre el estado físico o hardware del equipo..."></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Acción de Descarga -->
+    <div class="action-row">
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="descargando"
+        (click)="descargarFormato()">
+        <mat-icon>download</mat-icon>
+        {{ incluirFormatoEntrega ? 'Descargar Formato de ' + (tipoEntrega === 'entrega' ? 'Entrega' : 'Devolución') : 'Descargar Hoja de Vida' }}
+      </button>
+    </div>
+
+  </ng-container>
+
+</div>

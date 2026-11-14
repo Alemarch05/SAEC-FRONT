@@ -6,6 +6,7 @@ import { DetalleEquipoComponent } from './components/detalle-equipo/detalle-equi
 import { Dashboard } from './components/dashboard/dashboard';
 import { Configuracion } from './components/configuracion/configuracion';
 import { HistorialAlertas } from './components/historial-alertas/historial-alertas';
+import { HojaVida } from './components/hoja-vida/hoja-vida';
 export const routes: Routes = [
   
   {
@@ -23,6 +24,7 @@ export const routes: Routes = [
       { path: 'configuracion', component: Configuracion },
       { path: 'historial', component: HistorialAlertas },
       { path: 'historial/:id', component: HistorialAlertas },
+      { path: 'hoja-vida/:id', component: HojaVida },
       
 
     ]
