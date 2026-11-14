@@ -2,7 +2,7 @@
 
   <!-- Fila superior: 3 Tarjetas de Métricas -->
   <div class="metrics-row">
-    
+
     <!-- Tarjeta 1: Total de Equipos de la Empresa -->
     <mat-card appearance="outlined" class="section-card metric-card">
       <mat-card-header>
@@ -53,7 +53,7 @@
     <mat-card-content class="alerts-content">
 
       <div *ngFor="let alerta of alertas; let last = last">
-        <div class="template-row">
+        <div class="template-row clickable-row" (click)="irHistorialEquipo(alerta.device_id)">
           <div class="template-info">
             <div class="template-details">
               <span class="template-name">{{ obtenerTituloAlerta(alerta) }}</span>

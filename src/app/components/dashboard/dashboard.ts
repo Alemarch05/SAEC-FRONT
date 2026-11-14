@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { SettingService } from '../../core/services/setting.service';
 import { DeltaService } from '../../core/services/delta.service';
 import { DashboardMetrics } from '../../core/interfaces/setting.interface';
@@ -29,8 +30,9 @@ export class Dashboard implements OnInit {
   constructor(
     private settingService: SettingService,
     private deltaService: DeltaService,
+    private router: Router,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     // 1. Cargar métricas del Dashboard desde http://206.81.6.211/api/dashboard
@@ -126,5 +128,11 @@ export class Dashboard implements OnInit {
     }
     const diffDias = Math.floor(diffHoras / 24);
     return `Hace ${diffDias} ${diffDias === 1 ? 'día' : 'días'}`;
+  }
+
+  irHistorialEquipo(deviceId: string) {
+    if (deviceId) {
+      this.router.navigate(['/historial', deviceId]);
+    }
   }
 }

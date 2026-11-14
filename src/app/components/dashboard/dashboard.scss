@@ -102,6 +102,15 @@
   padding: 18px 24px;
   gap: 16px;
 
+  &.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f9fafb;
+    }
+  }
+
   .template-info {
     display: flex;
     align-items: center;
