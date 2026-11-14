@@ -5,6 +5,7 @@ import { CatalogoComponent} from './components/catalogo/catalogo.component';
 import { DetalleEquipoComponent } from './components/detalle-equipo/detalle-equipo.component';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Configuracion } from './components/configuracion/configuracion';
+import { HistorialAlertas } from './components/historial-alertas/historial-alertas';
 export const routes: Routes = [
   
   {
@@ -20,6 +21,8 @@ export const routes: Routes = [
       { path: 'catalogo/:id', component: DetalleEquipoComponent },
       { path: 'dashboard', component: Dashboard },
       { path: 'configuracion', component: Configuracion },
+      { path: 'historial', component: HistorialAlertas },
+      { path: 'historial/:id', component: HistorialAlertas },
       
 
     ]
