@@ -3,7 +3,6 @@
 
   <form [formGroup]="configForm" (ngSubmit)="guardarConfiguracion()" class="config-form">
     
-    <!-- Configuración General -->
     <mat-card appearance="outlined" class="section-card">
       <mat-card-header>
         <mat-card-title>Configuración General de la Empresa</mat-card-title>
@@ -18,7 +17,6 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Gestión de Plantillas -->
     <mat-card appearance="outlined" class="section-card">
       <mat-card-header>
         <mat-card-title>Gestión de Plantillas de Documentos</mat-card-title>
@@ -28,7 +26,6 @@
         
         <mat-divider></mat-divider>
 
-        <!-- Plantilla Entrega -->
         <div class="template-row">
           <div class="template-info">
             <mat-icon color="primary">description</mat-icon>
@@ -48,7 +45,6 @@
 
         <mat-divider></mat-divider>
 
-        <!-- Plantilla Hoja de Vida -->
         <div class="template-row">
           <div class="template-info">
             <mat-icon color="primary">description</mat-icon>
@@ -69,7 +65,6 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Botón de Acción -->
     <div class="action-row">
       <button mat-flat-button color="primary" type="submit" [disabled]="!configForm.valid">
         Guardar Configuración

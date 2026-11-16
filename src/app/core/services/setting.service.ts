@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Setting, DashboardMetrics } from '../interfaces/setting.interface';
+import { Observable, map } from 'rxjs';
+import { Setting, DashboardMetrics, TemplateKey, DocumentTemplateData } from '../interfaces/setting.interface';
+import PizZip from 'pizzip';
+import Docxtemplater from 'docxtemplater';
+
 
 @Injectable({
   providedIn: 'root'
@@ -37,4 +40,26 @@ export class SettingService {
 
     return this.http.post(`${this.apiUrl}/upload`, formData);
   }
+
+  generarDocumentoDiligenciado(key: TemplateKey, data: DocumentTemplateData): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/${key}/file`, { responseType: 'arraybuffer' }).pipe(
+      map((arrayBuffer: ArrayBuffer) => {
+        const zip = new PizZip(arrayBuffer);
+        const doc = new Docxtemplater(zip, {
+          paragraphLoop: true,
+          linebreaks: true,
+          delimiters: { start: '${', end: '}' }
+        });
+
+        doc.render(data);
+
+        return doc.getZip().generate({
+          type: 'blob',
+          mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        });
+      })
+    );
+  }
+
+
 }
