@@ -7,8 +7,13 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { Configuracion } from './components/configuracion/configuracion';
 import { HistorialAlertas } from './components/historial-alertas/historial-alertas';
 import { HojaVida } from './components/hoja-vida/hoja-vida';
+import { Verificar2faComponent } from './components/two-factor.component/two-factor.component';
 export const routes: Routes = [
-  
+  {
+    path: 'verificar-2fa',
+    component: Verificar2faComponent,
+    canActivate: [authGuard],
+  },
   {
     path: '',
     component: MainLayoutComponent,
