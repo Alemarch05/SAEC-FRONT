@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SettingService } from '../../core/services/setting.service';
 import { MaterialModule } from '../../shared/material.module'; 
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-configuracion',
@@ -50,15 +51,20 @@ export class Configuracion implements OnInit {
     }
   }
 
-  guardarConfiguracion() {
+guardarConfiguracion() {
     if (this.configForm.valid) {
       const nuevoValor = this.configForm.value.totalEquipos.toString();
-      
+
       this.settingService.updateSetting('total_equipos', nuevoValor).subscribe({
-        next: () => console.log('Configuración numérica actualizada exitosamente'),
+        next: () => this.mostrarExito(),
         error: (err) => {
           if (err.status === 404) {
-            this.settingService.createSetting({ key: 'total_equipos', value: nuevoValor }).subscribe();
+            this.settingService.createSetting({ key: 'total_equipos', value: nuevoValor }).subscribe({
+              next: () => this.mostrarExito(),
+              error: () => this.mostrarError('No se pudo guardar la meta de equipos.')
+            });
+          } else {
+            this.mostrarError('No se pudo actualizar la configuración.');
           }
         }
       });
@@ -66,22 +72,42 @@ export class Configuracion implements OnInit {
       if (this.plantillaEntrega) {
         this.settingService.uploadTemplate('plantilla_entrega', this.plantillaEntrega).subscribe({
           next: () => {
-            console.log('Plantilla de entrega subida con éxito');
-            this.plantillaEntrega = null; 
+            this.plantillaEntrega = null;
+            this.mostrarExito();
           },
-          error: (err) => console.error('Error al subir plantilla de entrega', err)
+          error: () => this.mostrarError('Error al subir la plantilla de entrega.')
         });
       }
-      
+
       if (this.plantillaHojaVida) {
         this.settingService.uploadTemplate('plantilla_hoja_vida', this.plantillaHojaVida).subscribe({
           next: () => {
-            console.log('Plantilla de hoja de vida subida con éxito');
-            this.plantillaHojaVida = null; 
+            this.plantillaHojaVida = null;
+            this.mostrarExito();
           },
-          error: (err) => console.error('Error al subir plantilla de hoja de vida', err)
+          error: () => this.mostrarError('Error al subir la plantilla de hoja de vida.')
         });
       }
     }
+  }
+
+  private mostrarExito() {
+    Swal.fire({
+      title: '¡Todo bien!',
+      text: 'Configuración guardada correctamente.',
+      icon: 'success',
+      confirmButtonColor: '#1E3A5F',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+
+  private mostrarError(mensaje: string) {
+    Swal.fire({
+      title: 'Error',
+      text: mensaje,
+      icon: 'error',
+      confirmButtonColor: '#1E3A5F'
+    });
   }
 }

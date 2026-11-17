@@ -49,7 +49,7 @@ export class DeviceService {
     return null;
   }
 
-  deleteDevice(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
-  }
+  deleteDevice(id: string): Observable<{ message: string }> {
+  return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
+}
 }

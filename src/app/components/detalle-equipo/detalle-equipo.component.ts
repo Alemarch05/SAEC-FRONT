@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialModule } from '../../shared/material.module';
 import { DeviceService } from '../../core/services/device.service';
 import { Device, HardwareSnapshot } from '../../core/interfaces/device.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle-equipo',
@@ -75,11 +76,43 @@ export class DetalleEquipoComponent implements OnInit {
 
   eliminarEquipo() {
     const current = this.device();
-    if (current && confirm('¿Estás seguro de eliminar este equipo de SAEC?')) {
-      this.deviceService.deleteDevice(current.id).subscribe({
-        next: () => this.router.navigate(['/catalogo']),
-        error: (err) => console.error('Error eliminando equipo', err),
-      });
-    }
+    if (!current) return;
+
+    Swal.fire({
+      title: '¿Eliminar equipo de SAEC?',
+      text: `Se eliminará permanentemente "${current.hostname}" (${current.serial_number || 'Sin S/N'}) y su historial de hardware.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DC2626',
+      cancelButtonColor: '#1E3A5F',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deviceService.deleteDevice(current.id).subscribe({
+          next: (res) => {
+            Swal.fire({
+              title: 'Equipo eliminado',
+              text: res?.message || 'El equipo ha sido removido del inventario.',
+              icon: 'success',
+              timer: 1800,
+              showConfirmButton: false,
+            }).then(() => {
+              this.router.navigate(['/catalogo']);
+            });
+          },
+          error: (err) => {
+            console.error('Error eliminando equipo', err);
+            Swal.fire({
+              title: 'No se pudo eliminar',
+              text: err.error?.message || 'Ocurrió un error al intentar eliminar el equipo en el servidor.',
+              icon: 'error',
+              confirmButtonColor: '#1E3A5F',
+            });
+          },
+        });
+      }
+    });
   }
 }
