@@ -1,0 +1,87 @@
+.catalog-container {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  align-items: flex-start; /* Para que el panel derecho no se estire hacia abajo si no es necesario */
+
+  .device-list {
+    flex: 2; /* Toma 2 partes del espacio */
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+
+    h2 {
+      margin-bottom: 16px;
+      color: #0B1F3B; /* Tu color Primary */
+      font-weight: 600;
+    }
+    
+    table {
+      width: 100%;
+    }
+
+    /* Efecto hover y fila seleccionada */
+    tr.mat-row {
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #F0F7FF; /* Tu color Background al pasar el mouse */
+      }
+    }
+
+    .selected-row {
+      background-color: #DBEAFE !important; /* Tu color Surface para destacar el click */
+      border-left: 4px solid #2563EB; /* Color Accent */
+    }
+  }
+
+  .device-preview {
+    flex: 1;
+    
+    mat-card {
+      border-radius: 8px;
+      overflow: hidden; // Recorta las esquinas para que la barra superior encaje exacto
+      padding: 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      
+      mat-card-header {
+        background-color: #0B1F3B;
+        color: white;
+        padding: 16px;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+
+        mat-card-title {
+          font-size: 1.1rem;
+          margin-bottom: 4px;
+        }
+        mat-card-subtitle {
+          color: #DBEAFE;
+          font-weight: bold;
+          margin: 0;
+        }
+      }
+
+      mat-card-content {
+        padding: 20px 16px 8px 16px;
+      }
+
+      mat-card-actions {
+        padding: 8px 16px 16px 16px;
+      }
+
+      p {
+        margin-bottom: 12px;
+        color: #333;
+        strong {
+          color: #0B1F3B;
+          display: inline-block;
+          width: 130px;
+        }
+      }
+    }
+  }
+}

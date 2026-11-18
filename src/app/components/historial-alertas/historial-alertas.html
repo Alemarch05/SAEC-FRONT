@@ -1,0 +1,105 @@
+<div class="historial-layout">
+
+  <!-- Columna Izquierda: Tabla de Historial de Cambios -->
+  <div class="table-section">
+    
+    <!-- Encabezado de columnas -->
+    <mat-card appearance="outlined" class="header-card">
+      <div class="history-grid header-row">
+        <span>Fecha &amp; Hora</span>
+        <span>Nombre del Equipo</span>
+        <span>Tipo de cambio</span>
+        <span>Realizado por</span>
+      </div>
+    </mat-card>
+
+    <!-- Filas de registros -->
+    <div class="rows-container">
+      <div
+        *ngFor="let item of historial"
+        class="history-pill"
+        [class.selected-pill]="deltaSeleccionado?.id === item.id"
+        (click)="seleccionarDelta(item)">
+        <div class="history-grid">
+          <span>{{ item.detected_at | date:'dd/MM/yyyy HH:mm' }}</span>
+          <span>{{ item.device?.hostname || nombreEquipo || item.device_id }}</span>
+          <span>{{ obtenerTipoCambio(item) }}</span>
+          <span>Soporte TI</span>
+        </div>
+      </div>
+
+      <mat-card appearance="outlined" class="empty-card" *ngIf="historial.length === 0">
+        <p class="section-description">No se encontraron registros de alertas o cambios para mostrar.</p>
+      </mat-card>
+    </div>
+
+  </div>
+
+  <!-- Columna Derecha: Panel de Detalles del Cambio -->
+  <mat-card appearance="outlined" class="detail-panel">
+    <div class="detail-header">
+      <h2 class="detail-main-title">Historial</h2>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="detail-body" *ngIf="deltaSeleccionado; else sinSeleccion">
+      <h3 class="detail-subtitle">Detalles del Cambio</h3>
+
+      <div class="detail-list">
+        <div class="detail-item">
+          <span class="detail-label">Fecha</span>
+          <span class="detail-value">{{ deltaSeleccionado.detected_at | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Cambio</span>
+          <span class="detail-value">{{ obtenerNombreComponente(deltaSeleccionado.component_name) }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Estado Anterior</span>
+          <span class="detail-value">{{ formatearValor(deltaSeleccionado.previous_value) }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Valor nuevo</span>
+          <span class="detail-value">{{ formatearValor(deltaSeleccionado.new_value) }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Responsable</span>
+          <span class="detail-value">Soporte TI</span>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="observations-section">
+        <h4 class="observations-title">Observaciones</h4>
+        <p class="observations-text">{{ obtenerObservaciones(deltaSeleccionado) }}</p>
+      </div>
+
+      <div class="detail-actions">
+        <button mat-stroked-button class="open-btn" (click)="abrirDetalleEquipo(deltaSeleccionado.device_id)">
+          <mat-icon>open_in_new</mat-icon>
+          Abrir
+        </button>
+      </div>
+    </mat-card-content>
+
+    <ng-template #sinSeleccion>
+      <mat-card-content class="detail-body empty-detail">
+        <p class="section-description">Selecciona un registro de la lista para visualizar los detalles del cambio.</p>
+        <div class="detail-actions" *ngIf="deviceId">
+          <button mat-stroked-button class="open-btn" (click)="abrirDetalleEquipo(deviceId)">
+            <mat-icon>arrow_back</mat-icon>
+            Volver al equipo
+          </button>
+        </div>
+      </mat-card-content>
+    </ng-template>
+  </mat-card>
+
+</div>
+

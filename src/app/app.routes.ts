@@ -1,11 +1,19 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
-import { Catalogo} from './components/catalogo/catalogo';
+import { CatalogoComponent} from './components/catalogo/catalogo.component';
+import { DetalleEquipoComponent } from './components/detalle-equipo/detalle-equipo.component';
 import { Dashboard } from './components/dashboard/dashboard';
 import { Configuracion } from './components/configuracion/configuracion';
+import { HistorialAlertas } from './components/historial-alertas/historial-alertas';
+import { HojaVida } from './components/hoja-vida/hoja-vida';
+import { Verificar2faComponent } from './components/two-factor.component/two-factor.component';
 export const routes: Routes = [
-  
+  {
+    path: 'verificar-2fa',
+    component: Verificar2faComponent,
+    canActivate: [authGuard],
+  },
   {
     path: '',
     component: MainLayoutComponent,
@@ -15,9 +23,13 @@ export const routes: Routes = [
       { path: '', redirectTo: 'catalogo', pathMatch: 'full' },
       
       // Aquí declaras la ruta para Enlace1Component
-      { path: 'catalogo', component: Catalogo },
+      { path: 'catalogo', component: CatalogoComponent },
+      { path: 'catalogo/:id', component: DetalleEquipoComponent },
       { path: 'dashboard', component: Dashboard },
       { path: 'configuracion', component: Configuracion },
+      { path: 'historial', component: HistorialAlertas },
+      { path: 'historial/:id', component: HistorialAlertas },
+      { path: 'hoja-vida/:id', component: HojaVida },
       
 
     ]
