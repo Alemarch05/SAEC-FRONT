@@ -1,0 +1,29 @@
+.btn-verificar {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  background-color: #0b1f3b; 
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(64, 78, 59, 0.25);
+}
+
+.btn-verificar:hover:not(:disabled) {
+  background-color: #2563eb
+}
+
+.btn-verificar:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.btn-verificar:disabled {
+  background-color: #0b1f3b; 
+  color: #c6c9c6;
+  cursor: not-allowed;
+  opacity: 0.75;
+  box-shadow: none;
+}
